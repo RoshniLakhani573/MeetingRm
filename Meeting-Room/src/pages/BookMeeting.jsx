@@ -58,7 +58,7 @@ const BookMeeting = () => {
     setFormData(selectedBooking);
   }
 }
-  }, []);
+  }, [id,searchParams]);
 
   const handleSubmit = (e) => {
   e.preventDefault();
@@ -125,35 +125,19 @@ if (overlap) {
   return;
 }
 
-  if (id) {
-    // Edit Booking
-    const updatedBookings = bookings.map((booking) =>
-      booking.id === Number(id)
-        ? {
-            ...booking,
-            ...formData,
-          }
-        : booking
-    );
+if (id) {
+  const updatedBookings = bookings.map((booking) =>
+    booking.id === Number(id)
+      ? {
+          ...booking,
+          ...formData,
+        }
+      : booking
+  );
 
-    localStorageService.saveBookings(updatedBookings);
-  } else {
-    // Create Booking
-    const newBooking = {
-      id: Date.now(),
-      ...formData,
-      status: "Upcoming",
-      createdAt: new Date().toISOString(),
-    };
-
-    bookings.push(newBooking);
-
-    localStorageService.saveBookings(bookings);
-  }
-
-  navigate("/bookings");
-
- const newBooking = {
+  localStorageService.saveBookings(updatedBookings);
+} else {
+  const newBooking = {
     id: Date.now(),
     ...formData,
     status: "Upcoming",
@@ -161,10 +145,11 @@ if (overlap) {
   };
 
   bookings.push(newBooking);
-
   localStorageService.saveBookings(bookings);
+}
 
-  navigate("/bookings");
+navigate("/bookings");
+
 };
   return (
     <Layout>

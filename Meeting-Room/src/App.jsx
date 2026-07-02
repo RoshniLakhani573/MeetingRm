@@ -54,7 +54,7 @@ function App() {
           }
         />
         <Route
-  path="/edit-booking/:id"
+  path="/book-meeting/:id"
   element={
     <ProtectedRoute>
       <BookMeeting />

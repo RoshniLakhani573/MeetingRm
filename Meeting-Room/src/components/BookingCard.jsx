@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BookMeeting from "../pages/BookMeeting";
 
 const BookingCard = ({ booking, onDelete }) => {
   return (
@@ -38,12 +39,12 @@ const BookingCard = ({ booking, onDelete }) => {
 >
   View
 </Link>
-
-        <button
-          className="bg-yellow-500 text-white px-4 py-2 rounded"
-        >
-          Edit
-        </button>
+<Link
+  to={`/book-meeting/${booking.id}`}
+  className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg"
+>
+  Edit
+</Link>
 
         <button
           onClick={() => onDelete(booking.id)}
