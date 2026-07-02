@@ -106,38 +106,54 @@ const BookMeeting = () => {
   }
 
   const bookings = localStorageService.getBookings();
-
-if (id) {
-  const updatedBookings = bookings.map((booking) =>
-    booking.id === Number(id)
-      ? {
-          ...booking,
-          ...formData,
-        }
-      : booking
-  );
-
-  localStorageService.saveBookings(updatedBookings);
-} else {
-  const newBooking = {
-    id: Date.now(),
-    ...formData,
-    status: "Upcoming",
-    createdAt: new Date().toISOString(),
-  };
-
-  bookings.push(newBooking);
-
-  localStorageService.saveBookings(bookings);
-}
-
-navigate("/bookings");
-  if (overlap) {
-    setError("This room is already booked for the selected time.");
-    return;
+  const overlap = bookings.some((booking) => {
+  // Ignore the current booking while editing
+  if (id && booking.id === Number(id)) {
+    return false;
   }
 
-  const newBooking = {
+  return (
+    booking.room === room &&
+    booking.date === date &&
+    startTime < booking.endTime &&
+    endTime > booking.startTime
+  );
+});
+
+if (overlap) {
+  setError("This room is already booked for the selected time.");
+  return;
+}
+
+  if (id) {
+    // Edit Booking
+    const updatedBookings = bookings.map((booking) =>
+      booking.id === Number(id)
+        ? {
+            ...booking,
+            ...formData,
+          }
+        : booking
+    );
+
+    localStorageService.saveBookings(updatedBookings);
+  } else {
+    // Create Booking
+    const newBooking = {
+      id: Date.now(),
+      ...formData,
+      status: "Upcoming",
+      createdAt: new Date().toISOString(),
+    };
+
+    bookings.push(newBooking);
+
+    localStorageService.saveBookings(bookings);
+  }
+
+  navigate("/bookings");
+
+ const newBooking = {
     id: Date.now(),
     ...formData,
     status: "Upcoming",

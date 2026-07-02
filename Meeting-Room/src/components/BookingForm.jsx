@@ -163,8 +163,10 @@ const BookingForm = ({ rooms, formData, setFormData, handleSubmit }) => {
         />
       </div>
 
-        <button>
-        {formData.id ? "Update Booking" : "Save Booking"}
+        <button
+        type="submit"
+        className="bg-blue-600 text-white px-6 py-3 rounded-lg">
+        {formData.id ? "Update Booking" : "Book Meeting"}
         </button>
     </form>
   );
