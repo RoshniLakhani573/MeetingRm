@@ -1,9 +1,9 @@
 const localStorageService = {
   initializeRooms(rooms) {
-    const existingRooms = localStorage.getItem("meetingRooms");
 
-    if (!existingRooms) {
-      localStorage.setItem("meetingRooms", JSON.stringify(rooms));
+    const existingRooms  = localStorage.getItem("meetingRooms");
+    if (!existingRooms){
+      localStorageService.setItem("meetingRooms",JSON.stringify(rooms));
     }
   },
 

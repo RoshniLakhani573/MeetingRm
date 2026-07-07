@@ -10,10 +10,6 @@ const BookingCard = ({ booking, onDelete }) => {
             {booking.title}
           </h2>
 
-          <p className="text-gray-600 mt-2">
-            Organizer: {booking.organizer}
-          </p>
-
           <p className="text-gray-600">
             Room: {booking.room}
           </p>
@@ -27,10 +23,15 @@ const BookingCard = ({ booking, onDelete }) => {
           </p>
         </div>
 
+        <p className="text-gray-600 mt-2">
+            Organizer: {booking.organizer}
+          </p>
+
         <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
           {booking.status}
         </span>
       </div>
+
 
       <div className="flex gap-3 mt-5">
         <Link

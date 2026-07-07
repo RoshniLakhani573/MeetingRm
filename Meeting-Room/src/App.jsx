@@ -1,20 +1,31 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import Loader from "./components/Loader";
 
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Rooms from "./pages/Rooms";
-import BookMeeting from "./pages/BookMeeting";
-import Bookings from "./pages/Bookings";
-import BookingDetails from "./pages/BookingDetails";
-import NotFound from "./pages/NotFound";
+const Login = lazy(()=>import("./pages/Login"))
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Rooms = lazy(() => import("./pages/Rooms"));
+const BookMeeting = lazy(()=> import("./pages/BookMeeting"));
+const Bookings = lazy(() => import("./pages/Bookings"));
+const BookingDetails = lazy(() => import("./pages/BookingDetails"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public Route */}
+
+  <BrowserRouter>
+  <Suspense
+    fallback={
+      <div className="flex justify-center items-center h-screen text-xl font-semibold">
+        Loading...
+      </div>
+    }
+  >
+    <Routes>
+      {/* All your routes */}
+      {/* Public Route */}
         <Route path="/" element={<Login />} />
 
         {/* Protected Routes */}
@@ -28,13 +39,7 @@ function App() {
         />
 
         <Route
-          path="/rooms"
-          element={
-            <ProtectedRoute>
-              <Rooms />
-            </ProtectedRoute>
-          }
-        />
+          path="/rooms" element={<ProtectedRoute><Rooms /></ProtectedRoute>}/>
 
         <Route
           path="/book-meeting"
@@ -72,9 +77,14 @@ function App() {
         />
 
         <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
+    </Routes>
+  </Suspense>
+</BrowserRouter>
+
+  )};
+
+
+
+ 
 
 export default App;
